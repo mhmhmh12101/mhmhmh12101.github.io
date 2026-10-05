@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["2WB7RFYUZ2.com.abdullahalharbi.social"],
+        "appID": "2WB7RFYUZ2.com.abdullahalharbi.social",
+        "paths": ["/p/*", "/u/*", "/t/*", "/s/*"],
+        "components": [
+          { "/": "/p/*", "comment": "منشور" },
+          { "/": "/u/*", "comment": "ملف" },
+          { "/": "/t/*", "comment": "موضوع (وسم)" },
+          { "/": "/s/*", "comment": "صوت" },
+          { "/": "*", "exclude": true, "comment": "باقي الموقع يفتح في المتصفح" }
+        ]
+      }
+    ]
+  }
+}
