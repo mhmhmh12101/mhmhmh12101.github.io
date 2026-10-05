@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سوشل</title>
+<meta name="description" content="افتحه في تطبيق سوشل: منشورات وريلز وقصص ورسائل.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-itunes-app" content="app-id=6819078666">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="سوشل">
+<meta property="og:title" content="سوشل">
+<meta property="og:description" content="افتحه في تطبيق سوشل: منشورات وريلز وقصص ورسائل.">
+<meta property="og:image" content="https://mhmhmh12101.github.io/logo.png">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="سوشل">
+<meta name="twitter:description" content="افتحه في تطبيق سوشل: منشورات وريلز وقصص ورسائل.">
+<meta name="twitter:image" content="https://mhmhmh12101.github.io/logo.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="top"><a href="/"><img src="/logo.png" alt=""><b>سوشل</b></a></header>
+  <div id="card"><div class="skel"></div></div>
+  <div class="actions" id="actions">
+    <a class="btn primary" id="open" href="/">افتح في التطبيق</a>
+    <a class="btn secondary" href="https://apps.apple.com/app/id6819078666">حمّل التطبيق</a>
+  </div>
+  <p class="note">التطبيق لسا تحت المراجعة؟ جرّب <a href="https://testflight.apple.com/join/hAxBpcnA">النسخة التجريبية</a> عبر TestFlight.</p>
+</main>
+<footer>
+  <nav>
+    <a href="/">عن سوشل</a>
+    <a href="https://descriptive-attention-092.notion.site/3ef57d70425a8007ad63fc98351244fa">سياسة الخصوصية</a>
+    <a href="https://descriptive-attention-092.notion.site/80a261a2e33c4f95a56083f27f12fd88">الشروط</a>
+    <a href="https://descriptive-attention-092.notion.site/4629d1e02f15432d9c7b793a2c5687ca">الدعم</a>
+  </nav>
+  © سوشل
+</footer>
+<script>
+// صفحات الروابط: GitHub Pages يعرض هذي الصفحة لأي مسار مو موجود، فنقرأ المسار:
+//   /p/<رقم المنشور>  /u/<اسم المستخدم>  /t/<وسم>  /s/<رقم الصوت>
+// والمعاينة من link_card (Supabase، المفتاح العام — العام بس: الخاص اسمه وصورته بس).
+// لو التطبيق موجود الرابط يفتحه مباشرة (Universal Links) وما توصل هنا أصلاً.
+(function () {
+  'use strict';
+  var SUPABASE = 'https://oerviiywgukupqplblrs.supabase.co';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lcnZpaXl3Z3VrdXBxcGxibHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNzkxMzIsImV4cCI6MjEwMDc1NTEzMn0.xznPae4wE9K_vMetn4JyDaVG-Azic5Xw9_bvPqDalTU';
+  var AVATARS = SUPABASE + '/storage/v1/object/public/avatars/';
+
+  var card = document.getElementById('card');
+  var open = document.getElementById('open');
+  var seg = location.pathname.split('/').filter(Boolean);
+  var kind = (seg[0] || '').toLowerCase();
+  var key = '';
+  try { key = decodeURIComponent(seg[1] || '').trim(); } catch (e) { key = ''; }
+  if (kind === 'u') key = key.replace(/^@/, '');
+  if (kind === 't') key = key.replace(/^#/, '');
+
+  var num = new Intl.NumberFormat('ar-u-nu-latn', { notation: 'compact', maximumFractionDigits: 1 });
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function clear() { while (card.firstChild) card.removeChild(card.firstChild); }
+
+  // علامة التوثيق (blue | white).
+  function badge(b) {
+    if (b !== 'blue' && b !== 'white') return null;
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'badge');
+    svg.setAttribute('aria-label', 'حساب موثّق');
+    var c = document.createElementNS(ns, 'path');
+    c.setAttribute('d', 'M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3 1 3-2.6 1.9-1 3-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3-2.6-1.9 1-3-1-3 2.6-1.9 1-3 3.2.1z');
+    c.setAttribute('fill', b === 'blue' ? '#1d9bf0' : 'var(--text)');
+    var k = document.createElementNS(ns, 'path');
+    k.setAttribute('d', 'M7.8 12.3l2.8 2.8 5.6-5.8');
+    k.setAttribute('fill', 'none');
+    k.setAttribute('stroke', b === 'blue' ? '#fff' : 'var(--bg)');
+    k.setAttribute('stroke-width', '2.2');
+    k.setAttribute('stroke-linecap', 'round');
+    k.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(c);
+    svg.appendChild(k);
+    return svg;
+  }
+
+  // صورة الحساب (من مخزن avatars العام بس)، وإلا أول حرف على لونه.
+  function avatar(a, big) {
+    var url = a && a.avatar_url;
+    if (typeof url === 'string' && url.indexOf(AVATARS) === 0) {
+      var img = el('img', 'av' + (big ? ' big' : ''));
+      img.src = url;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      return img;
+    }
+    var d = el('div', 'av' + (big ? ' big' : ''), ((a && a.name) || '؟').trim().charAt(0));
+    var hue = (a && typeof a.hue === 'number') ? a.hue : 210;
+    d.style.background = 'hsl(' + hue + ', 32%, 46%)';
+    return d;
+  }
+
+  function nameRow(a) {
+    var n = el('div', 'name');
+    n.appendChild(el('span', 't', a.name || ''));
+    var b = badge(a.badge);
+    if (b) n.appendChild(b);
+    return n;
+  }
+
+  function who(a) {
+    var w = el('div', 'who');
+    w.appendChild(avatar(a));
+    var t = el('div', 'names');
+    t.appendChild(nameRow(a));
+    t.appendChild(el('div', 'handle', '@' + (a.handle || '')));
+    w.appendChild(t);
+    return w;
+  }
+
+  function stat(parent, n, label) {
+    if (typeof n !== 'number') return;
+    var s = el('span');
+    s.appendChild(el('b', null, num.format(n)));
+    s.appendChild(document.createTextNode(' ' + label));
+    parent.appendChild(s);
+  }
+
+  function ago(iso) {
+    var t = Date.parse(iso);
+    if (!t) return '';
+    var s = (Date.now() - t) / 1000;
+    var rtf = new Intl.RelativeTimeFormat('ar-u-nu-latn', { numeric: 'auto' });
+    if (s < 60) return 'الحين';
+    if (s < 3600) return rtf.format(-Math.round(s / 60), 'minute');
+    if (s < 86400) return rtf.format(-Math.round(s / 3600), 'hour');
+    if (s < 86400 * 30) return rtf.format(-Math.round(s / 86400), 'day');
+    return new Date(t).toLocaleDateString('ar-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function empty(title, sub) {
+    clear();
+    var c = el('div', 'card empty');
+    c.appendChild(el('h2', null, title));
+    if (sub) c.appendChild(el('div', null, sub));
+    card.appendChild(c);
+  }
+
+  function setTitle(t) { document.title = t + ' · سوشل'; }
+
+  function render(d) {
+    clear();
+    var c = el('article', 'card');
+    if (d.kind === 'post') {
+      var a = d.author || {};
+      c.appendChild(who(a));
+      setTitle((d.private ? '' : 'منشور ') + (a.name || 'سوشل'));
+      if (d.private) {
+        c.appendChild(el('div', 'lock', '🔒 هذا الحساب خاص — المنشورات للمتابعين بس. افتح التطبيق وأرسل طلب متابعة.'));
+      } else {
+        if (d.text) {
+          var p = el('div', 'text', d.text);
+          if (d.more) p.appendChild(el('span', 'more', '… المزيد في التطبيق'));
+          c.appendChild(p);
+        }
+        if (d.media_count > 0) {
+          var kindTxt = d.reel ? 'ريل' : (d.media_type === 'video' ? 'مقطع' : (d.media_count > 1 ? d.media_count + ' صور' : 'صورة'));
+          c.appendChild(el('div', 'media', (d.media_type === 'video' || d.reel ? '▶︎ ' : '🖼 ') + kindTxt + ' — شوفها في التطبيق'));
+        }
+        if (d.created_at) c.appendChild(el('div', 'meta', ago(d.created_at)));
+        var st = el('div', 'stats');
+        stat(st, d.replies, 'رد');
+        stat(st, d.reposts, 'إعادة نشر');
+        stat(st, d.likes, 'إعجاب');
+        if (d.views) stat(st, d.views, 'مشاهدة');
+        c.appendChild(st);
+      }
+    } else if (d.kind === 'user') {
+      var u = d.author || {};
+      c.classList.add('profile');
+      c.appendChild(avatar(u, true));
+      c.appendChild(nameRow(u));
+      c.appendChild(el('div', 'handle', '@' + (u.handle || '')));
+      setTitle(u.name + ' (@' + u.handle + ')');
+      if (d.private) {
+        c.appendChild(el('div', 'lock', '🔒 هذا الحساب خاص'));
+      } else {
+        if (d.bio) c.appendChild(el('p', 'bio', d.bio));
+        var s2 = el('div', 'stats');
+        stat(s2, d.followers, 'متابِع');
+        stat(s2, d.following, 'يتابع');
+        c.appendChild(s2);
+      }
+    } else if (d.kind === 'tag') {
+      c.classList.add('tagcard');
+      c.appendChild(el('div', 'hash', '#' + d.tag));
+      c.appendChild(el('div', 'meta', d.count > 0 ? num.format(d.count) + ' منشور' : 'تابع الموضوع في التطبيق'));
+      setTitle('#' + d.tag);
+    }
+    card.appendChild(c);
+  }
+
+  var known = { p: 1, u: 1, t: 1, s: 1 };
+  if (!known[kind] || !key) {
+    document.getElementById('actions').style.display = 'none';
+    empty('الصفحة غير موجودة', '');
+    var home = el('a', 'btn primary', 'الصفحة الرئيسية');
+    home.href = '/';
+    home.style.marginTop = '16px';
+    card.appendChild(home);
+    return;
+  }
+
+  // «افتح في التطبيق»: رابط التطبيق المباشر (social://) لو الرابط العام ما فتحه.
+  open.href = 'social://' + kind + '/' + encodeURIComponent(key);
+
+  if (kind === 's') {
+    empty('🎵 صوت على سوشل', 'افتحه في التطبيق واسمعه أو استخدمه في ريل.');
+    return;
+  }
+
+  fetch(SUPABASE + '/rest/v1/rpc/link_card', {
+    method: 'POST',
+    headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_kind: kind, p_key: key }),
+    referrerPolicy: 'no-referrer'
+  }).then(function (r) {
+    if (!r.ok) throw new Error('http ' + r.status);
+    return r.json();
+  }).then(function (d) {
+    if (!d || typeof d !== 'object') {
+      empty(kind === 'u' ? 'هذا الحساب غير متاح' : 'هذا المحتوى غير متاح', 'ممكن انحذف أو صار خاص.');
+      return;
+    }
+    render(d);
+  }).catch(function () {
+    empty('ما قدرنا نجيب المعاينة', 'افتح الرابط في التطبيق.');
+  });
+})();
+</script>
+</body>
+</html>
