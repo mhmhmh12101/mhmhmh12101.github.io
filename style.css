@@ -1,0 +1,141 @@
+/* سوشل — نفس ألوان التطبيق (lib/theme.dart: الفاتح والأسود). */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface2: #f2f2f3;
+  --line: #e5e5e7;
+  --text: #18191b;
+  --text2: #3c3d41;
+  --muted: #85868c;
+  --accent: #18191b;
+  --accent-ink: #ffffff;
+  --blue: #1d9bf0;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 28px rgba(0, 0, 0, .06);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --surface: #121214;
+    --surface2: #1c1c1f;
+    --line: #1f1f22;
+    --text: #f5f5f5;
+    --text2: #d4d4d8;
+    --muted: #8e8e96;
+    --accent: #f5f5f5;
+    --accent-ink: #000000;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Arabic", "Segoe UI", "Noto Sans Arabic", Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+a { color: inherit; }
+.wrap {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+header.top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 0 8px;
+}
+header.top a { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+header.top img { width: 32px; height: 32px; border-radius: 8px; }
+header.top b { font-size: 19px; font-weight: 700; }
+
+/* الصفحة الرئيسية */
+.hero { text-align: center; padding: 48px 0 24px; }
+.hero img.logo {
+  width: 112px; height: 112px; border-radius: 26px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .18);
+}
+.hero h1 { font-size: 34px; margin: 22px 0 6px; font-weight: 800; letter-spacing: -.3px; }
+.hero p { color: var(--text2); margin: 0 auto; max-width: 340px; font-size: 17px; }
+.feats { list-style: none; padding: 0; margin: 28px 0 8px; display: grid; gap: 10px; }
+.feats li {
+  background: var(--surface2); border-radius: 14px; padding: 12px 14px;
+  display: flex; gap: 12px; align-items: center; color: var(--text2); font-size: 15px;
+}
+.feats li span.ic { font-size: 20px; width: 26px; text-align: center; }
+
+/* الأزرار */
+.actions { display: grid; gap: 10px; margin: 22px 0 6px; }
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 50px; border-radius: 999px; font-size: 16px; font-weight: 700;
+  text-decoration: none; border: 0; cursor: pointer; width: 100%;
+  -webkit-tap-highlight-color: transparent; transition: transform .12s ease, opacity .12s;
+}
+.btn:active { transform: scale(.98); opacity: .85; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.secondary { background: var(--surface2); color: var(--text); }
+.note { text-align: center; color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+.note a { color: var(--text2); font-weight: 600; }
+
+/* البطاقة */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 16px; margin-top: 16px; box-shadow: var(--shadow);
+}
+.who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.av {
+  width: 48px; height: 48px; border-radius: 50%; flex: none; object-fit: cover;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 20px; color: #fff; background: var(--surface2);
+}
+.av.big { width: 88px; height: 88px; font-size: 36px; }
+.names { min-width: 0; }
+.name { font-weight: 700; display: flex; align-items: center; gap: 4px; font-size: 16px; }
+.name span.t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.handle { color: var(--muted); font-size: 14.5px; direction: ltr; text-align: right; }
+.badge { width: 17px; height: 17px; flex: none; }
+.text {
+  margin: 12px 0 4px; font-size: 17px; line-height: 1.6;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.more { color: var(--muted); }
+.media {
+  margin-top: 10px; border-radius: 14px; background: var(--surface2); color: var(--muted);
+  padding: 18px; text-align: center; font-size: 14px;
+}
+.meta { color: var(--muted); font-size: 14px; margin-top: 10px; }
+.stats { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; color: var(--muted); font-size: 14px; }
+.stats b { color: var(--text); font-weight: 700; }
+.profile { text-align: center; }
+.profile .av { margin: 4px auto 10px; }
+.profile .name { justify-content: center; font-size: 21px; }
+.profile .handle { text-align: center; }
+.profile .bio { margin: 10px 0 0; color: var(--text2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.profile .stats { justify-content: center; }
+.tagcard { text-align: center; padding: 28px 16px; }
+.tagcard .hash { font-size: 30px; font-weight: 800; overflow-wrap: anywhere; }
+.lock { color: var(--muted); font-size: 14.5px; margin-top: 12px; text-align: center; }
+.empty { text-align: center; padding: 36px 8px; color: var(--text2); }
+.empty h2 { font-size: 20px; margin: 0 0 6px; color: var(--text); }
+.skel { height: 150px; border-radius: 20px; background: var(--surface2); margin-top: 16px; animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .55; } }
+
+footer {
+  width: 100%; max-width: 480px; padding: 28px 16px 32px; text-align: center;
+  color: var(--muted); font-size: 13.5px;
+}
+footer nav { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--text2); }
